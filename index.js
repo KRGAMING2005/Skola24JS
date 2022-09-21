@@ -1,4 +1,5 @@
 const axios = require('axios');
+const fs = require('fs');
 const apipath = 'https://web.skola24.se/api/';
 const keypath = 'get/timetable/render/key';
 const unitpath = 'services/skola24/get/timetable/viewer/units';
@@ -11,7 +12,7 @@ const domain = "skelleftea.skola24.se";
 const school = "Baldergymnasiet";
 const target = "TE2C";
 
-const day = 2;
+const day = 3;
 const week = 38;
 const year = 2022;
 
@@ -101,31 +102,59 @@ async function getSignature(scope, cookie) {
     return response.data.data.signature;
 }
 
+async function getScheduleJSONClass(scope, cookie, unit, key, clazz) {
+    var url = `${apipath}${tablerenderpath}`
+    var data = `{"renderKey":"${key}","host":"${domain}","unitGuid":"${unit}","startDate":null,"endDate":null,"scheduleDay":"${day}","blackAndWhite":false,"width":"1223","height":"618","selectionType":0,"selection":"${clazz}","showHeader":false,"periodText":"","week":"${week}","year":"${year}","privateFreeTextMode":null,"privateSelectionMode":false,"customerKey":""}`
+    const response = await axios({
+        method: 'post',
+        url: url,
+        data: data,
+        headers: {
+            'Content-Type': 'application/json',
+            'Cookie': cookie,
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-scope': scope
+        }
+    });
+
+    return response.data.data.lessonInfo;
+}
+
 async function getScheduleJSONPersonal(scope, cookie, unit, key, signature) {
     var url = `${apipath}${tablerenderpath}`
-        var data = `{"renderKey":"${key}","host":"${domain}","unitGuid":"${unit}","startDate":null,"endDate":null,"scheduleDay":"${day}","blackAndWhite":false,"width":"1","height":"1","selectionType":0,"selection":"${signature}","showHeader":false,"periodText":"","week":"${week}","year":"${year}","privateFreeTextMode":null,"privateSelectionMode":false,"customerKey":""}`
-        const response = await axios({
-            method: 'post',
-            url: url,
-            data: data,
-            headers: {
-                'Content-Type': 'application/json',
-                'Cookie': cookie,
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-scope': scope
-            }
-        });
-        return response.data;
+    var data = `{"renderKey":"${key}","host":"${domain}","unitGuid":"${unit}","startDate":null,"endDate":null,"scheduleDay":"${day}","blackAndWhite":false,"width":"1223","height":"618","selectionType":4,"selection":"${signature}","showHeader":false,"periodText":"","week":"${week}","year":"${year}","privateFreeTextMode":null,"privateSelectionMode":false,"customerKey":""}`
+    const response = await axios({
+        method: 'post',
+        url: url,
+        data: data,
+        headers: {
+            'Content-Type': 'application/json',
+            'Cookie': cookie,
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-scope': scope
+        }
+    });
+
+    return response.data.data.lessonInfo;
+}
+
+function isPersonnummer() {
+    return /^[0-9]+$/.test(target);
 }
 
 async function getSchedule() {
     let data = await initialRequest();
     let unit = await getUnit(data.scope, data.cookie);
     let key = await getKey(data.scope);
-    let classes = await getClass(data.scope, data.cookie, unit);
-    let signature = await getSignature(data.scope, data.cookie);
-    let schedulePersonal = await getScheduleJSONPersonal(data.scope, data.cookie, unit, key, signature);
-    return schedulePersonal;
+    if (isPersonnummer()) {
+        let signature = await getSignature(data.scope, data.cookie);
+        let schedulePersonal = await getScheduleJSONPersonal(data.scope, data.cookie, unit, key, signature);
+        return schedulePersonal;
+    }else {
+        let classes = await getClass(data.scope, data.cookie, unit);
+        let scheduleClass = await getScheduleJSONClass(data.scope, data.cookie, unit, key, classes);
+        return scheduleClass;
+    }
   }
   
   getSchedule()
