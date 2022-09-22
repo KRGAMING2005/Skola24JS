@@ -1,7 +1,4 @@
-const skola24 = require('./test');
+const skola24 = require('./index');
 
-
-console.log(skola24.getDomain());
-skola24.setDomain('skelleftea.skola24.se');
-console.log("Updated day")
-console.log(skola24.getDomain());
+skola24.setDomain('skelleftea.skola24.se').setSchool('Baldergymnaiset');
+console.log(`${skola24.getDomain()} \n${skola24.getSchool()}`)

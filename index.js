@@ -8,13 +8,30 @@ const selectionpath = 'get/timetable/selection';
 const tablerenderpath = 'render/timetable';
 const signaturepath = 'encrypt/signature';
 
-const domain = "skelleftea.skola24.se";
-const school = "Baldergymnasiet";
-const target = "TE2C";
+var domain = undefined;
+var school = undefined;
+var target = undefined;
+var day = undefined;
+var week = undefined;
+var year = undefined;
 
-const day = 3;
-const week = 38;
-const year = 2022;
+function getDomain() {
+    return domain;
+}
+
+function setDomain(newDomain) {
+    domain = newDomain;
+    return this;
+}
+
+function getSchool() {
+    return school;
+}
+
+function setSchool(newSchool) {
+    school = newSchool;
+    return this;
+}
 
 async function initialRequest() {
     var url = `${tablepath}${domain}/${school}`;
@@ -156,8 +173,16 @@ async function getSchedule() {
         return scheduleClass;
     }
   }
-  
-  getSchedule()
+/*  
+getSchedule()
   .then(async (scheduleJSON) => {
     console.log(scheduleJSON)
   });
+*/
+
+module.exports = {
+    getDomain: getDomain,
+    setDomain: setDomain,
+    getSchool: getSchool,
+    setSchool: setSchool
+}
