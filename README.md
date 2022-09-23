@@ -1,4 +1,5 @@
-# Skola24WrapperJS
+# Skola24JS
+### This package can help you get your schedule from skola24 in a json format.
 #### Usage:
 ```js
 const skola24 = require('skola24js');
