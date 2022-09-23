@@ -12,4 +12,10 @@ skola24.setYear(2022); // The year.
 skola24.getSchedule().then((jsonData) => {  // The function getSchedule() is asynchronous an therefore need to be used with .then to extract the data.
     console.log(jsonData);
 });
+
+// Or
+
+skola24.setDomain('xxx.skola24.se').setSchool('').setTarget('').setDay(5).setWeek(38).setYear(2022).getSchedule().then((jsonData) => {
+    console.log(jsonData);
+});
 ```
