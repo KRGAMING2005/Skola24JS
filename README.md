@@ -1,7 +1,7 @@
 # Skola24WrapperJS
 #### Usage:
 ```js
-const skola24 = require('skola24');
+const skola24 = require('skola24js');
 
 skola24.setDomain('xxx.skola24.se'); // The skola24 subdomain that your school uses.
 skola24.setSchool(''); // The name of your school.
