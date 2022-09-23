@@ -2,22 +2,21 @@
   "name": "skola24wrappernodejs",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "Skola24.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KRGAMING2005/Skola24WrapperJS.git"
+    "url": "git+https://github.com/KRGAMING2005/Skola24JS.git"
   },
   "author": "KR_GAMING2005",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/KRGAMING2005/Skola24WrapperJS/issues"
+    "url": "https://github.com/KRGAMING2005/Skola24JS/issues"
   },
-  "homepage": "https://github.com/KRGAMING2005/Skola24WrapperJS#readme",
+  "homepage": "https://github.com/KRGAMING2005/Skola24JS#readme",
   "dependencies": {
-    "axios": "^0.27.2",
-    "fs": "^0.0.1-security"
+    "axios": "^0.27.2"
   }
 }

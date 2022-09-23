@@ -1,5 +1,4 @@
 const axios = require('axios');
-const fs = require('fs');
 const apipath = 'https://web.skola24.se/api/';
 const keypath = 'get/timetable/render/key';
 const unitpath = 'services/skola24/get/timetable/viewer/units';
@@ -30,6 +29,42 @@ function getSchool() {
 
 function setSchool(newSchool) {
     school = newSchool;
+    return this;
+}
+
+function getTarget() {
+    return target;
+}
+
+function setTarget(newTarget) {
+    target = newTarget;
+    return this;
+}
+
+function getDay() {
+    return day;
+}
+
+function setDay(newDay) {
+    day = newDay;
+    return this;
+}
+
+function getWeek() {
+    return week;
+}
+
+function setWeek(newWeek) {
+    week = newWeek;
+    return this;
+}
+
+function getYear() {
+    return year;
+}
+
+function setYear(newYear) {
+    year = newYear;
     return this;
 }
 
@@ -184,5 +219,14 @@ module.exports = {
     getDomain: getDomain,
     setDomain: setDomain,
     getSchool: getSchool,
-    setSchool: setSchool
+    setSchool: setSchool,
+    getTarget: getTarget,
+    setTarget: setTarget,
+    getDay: getDay,
+    setDay: setDay,
+    getWeek: getWeek,
+    setWeek: setWeek,
+    getYear: getYear,
+    setYear: setYear,
+    getSchedule: getSchedule
 }
